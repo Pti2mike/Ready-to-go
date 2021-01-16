@@ -1,25 +1,47 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from "react";
+import Header from "./components/Header";
+import Switch from "./components/Switch";
+import Footer from "./components/Footer";
+import "./App.css";
+
+import { library } from "@fortawesome/fontawesome-svg-core";
+import { faSpaceShuttle } from "@fortawesome/free-solid-svg-icons";
+library.add(faSpaceShuttle);
 
 function App() {
+  const [switch1, setSwitch1] = useState(false);
+  const [switch2, setSwitch2] = useState(false);
+  const [switch3, setSwitch3] = useState(false);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
+    <div>
+      <Header />
+      <div className="wrapper">
+        <div>
+          <Switch switch={switch1} setSwitch={setSwitch1} />
+          <Switch switch={switch2} setSwitch={setSwitch2} />
+          <Switch switch={switch3} setSwitch={setSwitch3} />
+        </div>
+
+        <div
+          className={`result ${switch1 && switch2 & switch3 ? "go" : "no-way"}`}
         >
-          Learn React
-        </a>
-      </header>
+          {switch1 && switch2 & switch3 ? "Go!" : "No way!"}
+        </div>
+        <div
+          className={switch1 && switch2 && switch3 && "reset"}
+          onClick={() => {
+            setSwitch1(false);
+            setSwitch2(false);
+            setSwitch3(false);
+          }}
+        >
+          {switch1 && switch2 && switch3 && "Reset"}
+        </div>
+      </div>
+
+      <Footer />
     </div>
   );
 }
-
 export default App;
